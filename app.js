@@ -1,40 +1,11 @@
+require('dotenv').config();
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 const mongoose = require('mongoose');
 require('./models/connection');
-
-const cors = require('cors');
-const corsOptions = {
-    origin: ['https://labup-frontend.vercel.app', 'https://labup-backend.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-};
-
-var app = express();
-
-app.use(cors(corsOptions));  // Activer CORS avant les autres middlewares
-
-app.options('*', cors(corsOptions));  // Gérer les requêtes préflight
-
-// Middleware pour bodyparser
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Middleware pour la gestion des fichiers multipart/form-data avec multer
-var multer = require('multer');
-var upload = multer();
-
-app.use(express.static('public'));
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 var usersRouter = require('./routes/users');
 var initialPatternsRouter = require('./routes/initialPatterns');
@@ -46,6 +17,38 @@ var fontsRouter = require("./routes/fonts");
 var feedRouter = require("./routes/feed");
 var dashboardRouter = require("./routes/dashboard");
 
+var app = express();
+
+// CORS configuration
+const cors = require('cors');
+const corsOptions = {
+    origin: ['https://labup-frontend.vercel.app', 'https://labup-backend.vercel.app'], // Autorise ces origines
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes acceptées
+    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
+    credentials: true, // Si vous gérez des cookies ou des sessions
+};
+
+app.use(cors(corsOptions));  // Activer CORS pour toutes les routes
+
+// Gérer les requêtes préflight (OPTIONS)
+app.options('*', cors(corsOptions));  // Ajoute les en-têtes CORS pour toutes les routes OPTIONS
+
+// Middleware pour bodyparser
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Middleware pour la gestion des fichiers multipart/form-data avec multer
+var multer = require('multer');
+var upload = multer();
+
+app.use(express.static('public'));
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
 app.use('/users', usersRouter);
 app.use('/initialPatterns', initialPatternsRouter);
 app.use('/modifiedPatterns', upload.single('photoFromFront'), modifiedPatternsRouter);
