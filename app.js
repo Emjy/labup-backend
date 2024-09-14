@@ -4,8 +4,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 const mongoose = require('mongoose');
 require('./models/connection');
+
 
 var usersRouter = require('./routes/users');
 var initialPatternsRouter = require('./routes/initialPatterns');
@@ -20,18 +22,14 @@ var dashboardRouter = require("./routes/dashboard");
 var app = express();
 
 // CORS configuration
-const cors = require('cors');
 const corsOptions = {
-    origin: ['https://labup-frontend.vercel.app/'], // Autorise ces origines
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes acceptées
-    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
-    credentials: true, // Si vous gérez des cookies ou des sessions
+    origin: ['https://labup-frontend.vercel.app'], // Autorise ces origines
 };
 
 app.use(cors(corsOptions));  // Activer CORS pour toutes les routes
 
 // Gérer les requêtes préflight (OPTIONS)
-app.options('*', cors(corsOptions));  // Ajoute les en-têtes CORS pour toutes les routes OPTIONS
+// app.options('*', cors(corsOptions));  // Ajoute les en-têtes CORS pour toutes les routes OPTIONS
 
 // Middleware pour bodyparser
 const bodyParser = require('body-parser');
