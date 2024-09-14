@@ -24,6 +24,8 @@ var app = express();
 const cors = require('cors');
 const corsOptions = {
     origin: ['https://labup-frontend.vercel.app'],
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true  // Si vous gérez les cookies d'authentification
 };
 app.use(cors(corsOptions));
 
