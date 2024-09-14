@@ -22,7 +22,7 @@ var dashboardRouter = require("./routes/dashboard");
 var app = express();
 
 const corsOptions = {
-    origin: '*', // Autoriser toutes les origines
+    origin: 'https://labup-frontend.vercel.app', // Autorise uniquement ton frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
     allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes acceptés
     credentials: true, // Si tu gères des cookies ou des sessions
