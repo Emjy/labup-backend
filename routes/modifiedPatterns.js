@@ -84,7 +84,7 @@ router.post('/', async (req, res) => {
             throw new Error('Missing or empty fields');
         }
 
-        const photoPath = `./tmp/${uniqid()}.png`;
+        const photoPath = `/tmp/${uniqid()}.png`;
         const resultMove = await writeFileAsync(photoPath, req.file.buffer);
 
         if (!resultMove) {
