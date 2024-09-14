@@ -22,7 +22,7 @@ var app = express();
 // CORS configuration
 const cors = require('cors');
 const corsOptions = {
-    origin: ['https://labup-frontend.vercel.app', 'https://labup-backend.vercel.app'], // Autorise ces origines
+    origin: ['https://labup-frontend.vercel.app/'], // Autorise ces origines
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes acceptées
     allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
     credentials: true, // Si vous gérez des cookies ou des sessions
