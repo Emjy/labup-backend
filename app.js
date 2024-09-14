@@ -23,7 +23,7 @@ var app = express();
 
 // CORS configuration
 const corsOptions = {
-    origin: ['https://labup-frontend.vercel.app/', 'http://localhost:3000', 'http://localhost:3001'], // Autorise ces origines
+    origin: ['https://labup-frontend.vercel.app', 'http://localhost:3000', 'http://localhost:3001'], // Autorise ces origines
 };
 
 app.use(cors(corsOptions));  // Activer CORS pour toutes les routes
