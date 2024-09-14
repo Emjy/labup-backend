@@ -23,10 +23,7 @@ var app = express();
 // Configurer CORS pour accepter uniquement l'origine spécifique
 const cors = require('cors');
 const corsOptions = {
-    origin: 'https://labup-backend.vercel.app',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true  // Si vous gérez les cookies d'authentification
+    origin: ['https://labup-frontend.vercel.app'],
 };
 app.use(cors(corsOptions));
 
