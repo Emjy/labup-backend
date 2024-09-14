@@ -21,11 +21,15 @@ var dashboardRouter = require("./routes/dashboard");
 
 var app = express();
 
-// CORS configuration
 const corsOptions = {
-    origin: '*',
-}
+    origin: '*', // Autoriser toutes les origines
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
+    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes acceptés
+    credentials: true, // Si tu gères des cookies ou des sessions
+};
+
 app.use(cors(corsOptions));  // Activer CORS pour toutes les routes
+
 // Gérer les requêtes préflight (OPTIONS)
 app.options('*', cors(corsOptions));  // Ajoute les en-têtes CORS pour toutes les routes OPTIONS
 
