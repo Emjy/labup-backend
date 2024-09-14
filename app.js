@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -8,27 +6,19 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 require('./models/connection');
 
-var usersRouter = require('./routes/users');
-var initialPatternsRouter = require('./routes/initialPatterns');
-var modifiedPatternsRouter = require('./routes/modifiedPatterns');
-var documentsRouter = require("./routes/documents");
-var exportsRouter = require("./routes/exports");
-var foldersRouter = require("./routes/folders");
-var fontsRouter = require("./routes/fonts");
-var feedRouter = require("./routes/feed");
-var dashboardRouter = require("./routes/dashboard");
+const cors = require('cors');
+const corsOptions = {
+    origin: ['https://labup-frontend.vercel.app', 'https://labup-backend.vercel.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
 
 var app = express();
 
-// Configurer CORS pour accepter uniquement les origines spécifiques
-const cors = require('cors');
-const corsOptions = {
-    origin: ['https://labup-frontend.vercel.app', 'https://labup-backend.vercel.app'], // Origines autorisées
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
-    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
-    credentials: true, // Si vous gérez les cookies ou sessions
-};
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));  // Activer CORS avant les autres middlewares
+
+app.options('*', cors(corsOptions));  // Gérer les requêtes préflight
 
 // Middleware pour bodyparser
 const bodyParser = require('body-parser');
@@ -45,6 +35,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var usersRouter = require('./routes/users');
+var initialPatternsRouter = require('./routes/initialPatterns');
+var modifiedPatternsRouter = require('./routes/modifiedPatterns');
+var documentsRouter = require("./routes/documents");
+var exportsRouter = require("./routes/exports");
+var foldersRouter = require("./routes/folders");
+var fontsRouter = require("./routes/fonts");
+var feedRouter = require("./routes/feed");
+var dashboardRouter = require("./routes/dashboard");
 
 app.use('/users', usersRouter);
 app.use('/initialPatterns', initialPatternsRouter);
