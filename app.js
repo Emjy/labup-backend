@@ -8,7 +8,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('./models/connection');
 
-
 var usersRouter = require('./routes/users');
 var initialPatternsRouter = require('./routes/initialPatterns');
 var modifiedPatternsRouter = require('./routes/modifiedPatterns');
@@ -22,7 +21,7 @@ var dashboardRouter = require("./routes/dashboard");
 var app = express();
 
 const corsOptions = {
-    origin: 'https://labup-frontend.vercel.app', // Autorise uniquement ton frontend
+    origin: ['https://labup-frontend.vercel.app', 'http://localhost:3001'], // Autorise uniquement ton frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
     allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes acceptés
     credentials: true, // Si tu gères des cookies ou des sessions
