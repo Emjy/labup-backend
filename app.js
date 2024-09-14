@@ -20,12 +20,13 @@ var dashboardRouter = require("./routes/dashboard");
 
 var app = express();
 
-// Configurer CORS pour accepter uniquement l'origine spécifique
+// Configurer CORS pour accepter uniquement les origines spécifiques
 const cors = require('cors');
 const corsOptions = {
-    origin: ['https://labup-frontend.vercel.app'],
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true  // Si vous gérez les cookies d'authentification
+    origin: ['https://labup-frontend.vercel.app', 'https://labup-backend.vercel.app'], // Origines autorisées
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
+    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
+    credentials: true, // Si vous gérez les cookies ou sessions
 };
 app.use(cors(corsOptions));
 
